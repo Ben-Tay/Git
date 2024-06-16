@@ -112,3 +112,10 @@ object.equals(unequal);      // => false
     
 2. A patient has asked to have their profile removed from the system. (Note: This is usually not possible in the real world, but let's consider it anyway.)
     * Unless there is a Patient ID for uniqueness checking, we would make use of memory equality (==) to determine where in memory the patient's details are stored
+
+## What About in This Course?
+In this course, unless you are checking for nulls, you will overwhelmingly be using the .equals() method for value equality rather than using ==.
+
+For perspective, you should imagine yourself as the writer of the Collections classes in Java such as ArrayList, LinkedList, etc. If you are working with data that the data structure is storing, then you should use value equality because the user is the one defining equality.
+
+If the user wanted reference equality, they can simply not override the default implementation of .equals(). This approach, of assuming value equality, gives your code the most flexibility with the user.
