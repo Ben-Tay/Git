@@ -1,15 +1,16 @@
-// Understanding visibility modifiers
-// Public - viewable by class & inner classes, packages, subclasses, world
-// Protected - viewable by class & inner classes, packages, subclasses
-// Package-Private (not indicated) - viewable by class & inner classes, packages
-// Private - viewable by class & inner classes
+/* Understanding visibility modifiers
+Public - viewable by class & inner classes, packages, subclasses, world
+Protected - viewable by class & inner classes, packages, subclasses
+Package-Private (no modifier) - viewable by class & inner classes, packages
+Private - viewable by class & inner classes
+*/
 class Point {
     private double x;
     private double y;
 
     public Point(double x, double y) {
-        // this - acts as a reference to the current class instance 
-
+        // this - acts as a reference to the current class instance variable 
+        // important to use "this" if have other variables w same name as instance names
         this.x = x;
         this.y = y;
     }
@@ -20,6 +21,7 @@ class Point {
             by passing in known value a as a parameter & default y value of 0 */
         this(a, 0);
         // Allows for providing only portion of object's entities w/o knowing all parameter values
+        // AKA object instantiation flexibility
     }
 
     public String toString() {
