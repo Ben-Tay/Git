@@ -77,9 +77,18 @@ Example: Given an array of length n , sum all the elements in the array
 ## O(log(n)) - Logarithmic Complexity
 * Performance scales with input size logarithmically
 * Base doesn't matter as it is a constant, but usually CS uses base 2
+
 $$
  logm(n) = \frac{log2(n)}{log2(m)} = Clog2(n) = O(logm(n)) = O(log(n))
 $$
+
 Example: given sorted array of length n, performing a binary search
 
 > Finally; note that whilst we drop constant factors -- this is from a theoretical POV and constants may actually affect efficiency
+
+Example: Given following 2 algorithms
+1. Algorithm A - O(n) - on paper this scales better than B as its runtime does not grow as fast
+2. Algorithm B - O(n^2)
+> However, consider that:
+Algorithm A performs 1000000000000n operations, whilst Algorithm B performs 2n^2 operations
+* In such a case, without purely looking at the Big O notation, we will find that Algo B performs fewer operations than Algo A for smaller input sizes, so its wiser to use Algo B here
