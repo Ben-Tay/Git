@@ -44,3 +44,42 @@
 * Whilst primitive operations may seem trivial, if it involves large number of units it may still pose a significant computational task (ie. multiply 2 very long numbers)
 
 Even though everything in this course is `O(n^4)` technically , whenever we ask for the Big-O of something, we are asking for the best reasonable upper bound you can give (i.e. if an operation is clearly `O(n)`, then you cannot just say it is `O(n^2)` even though that is technically correct).
+
+Example explanation:
+![meant to show image](https://github.com/Ben-Tay/Git/blob/main/Data%20Structures%20&%20Algo/src/Module%200/Asymptotic%20Complexity.png?raw=true)
+
+## Big-O Conventions
+> Big-O is meant to measure how performance scales as input grows towards infinity 
+1. Drop constant factors
+* As input size increases, constant factors grow `insignificantly` and can be disregarded
+* Example: `O(5n) => O(n)` and `O(5n^2) => O(n^2)`
+* 5 here is dropped
+2. Drop Lower-Order terms
+* As n approaches infinity, lower-order terms do not grow as fast so can just ignore
+* Example: `O(n^2 + 1000n - 3) => O(n^2)` and `O(3n + 2log(n) + nlog(n)) => O(n(log(n)))`
+
+## O(1) - Constant Complexity
+Performance does not scale at all with input size, amount of time taken remains same
+
+Example: Given an array, returning the 1st element is always O(1)
+* Array 1: {5,8,1,4,9}
+* Array 2: {1,2,3,4,5,6,7,8,9}
+* Time taken to retrieve 1st element from both arrays will be the same regardless of number of inputs in each array
+
+## O(n) - Linear Complexity
+Performance scales proportionally with the input size
+Example: Given an array of length n , sum all the elements in the array
+* Array 1: {5,8,1,4,9}
+* Array 2: {1,2,3,4,5,6,7,8,9}
+* Time taken to traverse through Array 1 for summing elements will be lesser than Array 2 due to lesser elements
+* Big O of the sum operation here will be `O(n)` --> time complexity increases with the number of inputs
+
+## O(log(n)) - Logarithmic Complexity
+* Performance scales with input size logarithmically
+* Base doesn't matter as it is a constant, but usually CS uses base 2
+$$
+ logm(n) = \frac{log2(n)}{log2(m)} = Clog2(n) = O(logm(n)) = O(log(n))
+$$
+Example: given sorted array of length n, performing a binary search
+
+> Finally; note that whilst we drop constant factors -- this is from a theoretical POV and constants may actually affect efficiency
