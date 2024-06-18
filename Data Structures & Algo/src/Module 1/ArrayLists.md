@@ -63,9 +63,17 @@ Linear Complexity `O(n)`
 * Current capacity: 5 & number of elements = 5
 * To add a 6th element => we need to resize the array which takes `O(n)` time to do so.
 * Note that this is considered as the `worst-case` scenario as resizing is required, but this is `pessimistic` as resizing rarely occurs.
+
+#### Armotized Analysis
 * `Armortized analysis` of adding to the back:
     * In the very rare event of having to resize, by comparing the no. of occurrences of having to resize as opposed to a number of occurences of other O(1) operations
     * We can take the average and argue that adding to the back is technically an `O(1)` operation overall as opposed to looking at its single cost of `O(n)`.
+    * To keep it short -  rather than looking at the per operation cost, we instead consider `all sequences of  operation`s and `average the cost` over the number of operations as shown below:
+
+$$
+Armotized Cost = \frac{total cost of all operations}{no.of operations} = \frac {2n}{n} = 2 = O(1)
+$$
+> Here we use `2n` because resizing typically involves doubling the capacity of the arraylist `n`. Example: Capacity of 8 when full will be doubled to `2(8) = 16 `
 
 ## Adding Elsewhere
 * Arbitary index or front of ArrayList
@@ -78,3 +86,19 @@ Linear Complexity `O(n)`
 * Removing from the back is always `O(1)`.
 * Removing from anywhere else in the array is always `O(n)`.
     * Likewise, given an arraylist of size 5, removing an element at index 1, would require elements at indexes `2,3,4` to shift forward by 1 cell to make the data `contiguous` which leads to `O(n)` complexity
+
+### Soft vs Hard Removals
+`Hard Removal` 
+*  Ensure that data removed is `completely removed` from backing structure
+* (i.e. if you searched the entire array, you would not find the data). In an ArrayList, this often happens naturally in the shifting process, but when necessary, you may need to manually set an array position to null in order to perform a hard removal.
+
+`Soft Removal` 
+* When you leave the data in the data structure unless it is absolutely necessary to get rid of it.
+* Example: in the ArrayList, the "end" of the ArrayList is controlled by the size variable. So, it may not be strictly necessary to completely remove the data at the end if it's removed since the end can just be controlled by the size if it's done carefully.
+
+> Typically expected to perform `hard removals` unless absolutely necessary (HashMaps)
+* Reason being that if the data being stored is sensitive, we will want to ensure that when the user removes data, the data is truly removed from the data structure so that no adversaries can access it.
+* Also makes data structures' implementation details cleaner to work with
+
+
+
