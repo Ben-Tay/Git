@@ -5,6 +5,7 @@ Correct recursive method must have 3 following attributes:
 
 `Base Case(s)`: Termination condition(s) that ensure all branches of recursion stop eventually
 * Recursion w/o a base case will loop/run forever and causes a `stack overflow` error.
+* To ensure that this process terminates, we need a base case that is simple enough to solve directly without further recursion, (ie left 1 step)
 
 `Recursive Case(s)`: Method calls to itself
 * Any time a recursive method is reached, current method call will block/pause at that line until the recursive call `returns a value`.
@@ -92,3 +93,76 @@ public int gcd(int x, int y) {
         return gcd(y, remainder));
     }
 }
+```
+## Structural Recursion
+> In the past, we have worked on recursions that are more numerical oriented, but since we have a focus on data structures, we need to have our recursion acting on a data structure of some sort 
+
+Java code to handle tiling problem:
+```sh
+public class Tiling {
+    public static int countTilings(int n) {
+        if (n == 0) return 1;  // Base case for a(0)
+        if (n == 1) return 3;  // Base case for a(1)
+
+        // Initialize base cases
+        int a0 = 1;  // Corresponds to a(0)
+        int a1 = 3;  // Corresponds to a(1)
+
+        // Iterate from 2 to n to compute the number of ways for each grid size
+        for (int i = 2; i <= n; i++) {
+            int a2 = 3 * a1 + 4 * a0;  // Use the recursive formula to compute a(n)
+            a0 = a1;  // Update a(0) to be the previous a(1)
+            a1 = a2;  // Update a(1) to be the current a(n)
+        }
+
+        return a1;  // Return the number of ways for the 2x(n) grid
+    }
+
+    public static void main(String[] args) {
+        int n = 10;  // Example value for n
+        System.out.println("Number of ways to tile a 2x" + n + " grid: " + countTilings(n));
+    }
+}
+```
+#### Increasing subsequences in Arrays
+Suppose that we have an array A of length `n` as input consisting of `n` distinct integers. A subsequence of the array is a sequence of some of the array entries in the order that they appear.
+> Given the array `[1,7,3,5,2,8,10,24,-1,-5,4]`, then `3,2,-1,-5,4` is a valid subsequence since the numbers appear in the sequence in array order whilst `1,7,10,8` is not a valid subsequence as 10 is supposed to be after 8.
+* An increasing subsequence is one where the numbers are `in increasing` order which is part of a `sorted array` and there are 2^n of them
+
+Problem: count number of `increasing subsequences` in the array by counting & summing no.of possible sequences that can be formed at each index
+
+```sh
+public class IncreasingSubsequences {
+    public static int countIncreasingSubsequences(int[] A) {
+        int n = A.length;
+        int[] dp = new int[n];
+
+        // Initialize dp array: each element itself is a subsequence
+        for (int i = 0; i < n; i++) {
+            dp[i] = 1;
+        }
+
+        // Calculate number of increasing subsequences ending at each index
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (A[j] < A[i]) {
+                    dp[i] += dp[j];
+                }
+            }
+        }
+
+        // Sum up all dp[i] values to get the total number of increasing subsequences
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            total += dp[i];
+        }
+
+        return total;
+    }
+
+    public static void main(String[] args) {
+        int[] A = {1, 3, 2, 4};
+        System.out.println("Total number of increasing subsequences: " + countIncreasingSubsequences(A));
+    }
+}
+```
