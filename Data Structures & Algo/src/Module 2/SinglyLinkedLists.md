@@ -82,6 +82,21 @@ public class SinglyLinkedList {
         # New node becomes the new head and u can still access rest of the list
     } 
 
+    # If adding to the back, while loop changes a bit
+    public void addToBack(int data) {
+        # handle edge case where linkedlist is empty
+        if (head == null) {     
+            head = new Node(data);
+        } else {
+            Node current = head;
+            while(current.next != null) {
+                current = current.next;
+            }
+            # Reset the reference for current.next to the new node (to ensure we stop at the end)
+            current.next = new Node(data);
+        }
+    }
+
     # Iterate thru the list to print out the SLL data
     public String toString() {
         # Step 1: Create empty string to print final list
@@ -95,7 +110,90 @@ public class SinglyLinkedList {
             answer += current + "";
             current = current.next; # moves to next node
         }
+        return answer;
     }
 }
 ```
 > When reassigning pointers, need to be careful so that we do `not lose` access to the rest of the list
+## Basic Remove operations in SLL
+
+# handle edge case where linkedlist is empty> Head will be reassigned to the next node
+* Eg: U removed data 1 from the front, so head will now be reassigned to data 2 in the linked list
+```sh
+public class SinglyLinkedList {
+    # other class details omitted for brevity
+    public void removeFromFront() {
+        head = head.next;
+    }
+}
+```
+> Unnecessary to explicitly delete previous node that was the `head` as Java has garbage collection
+* `GC` essentially frees up any memory that is no longer accessible, so once head is removed from data 1, it is no longer accessible to access the old head 
+* Does not matter if old head still points to next node in linkedlist, as nothing can ever reach it `anymore`
+
+#### Remove from back
+* Modifications to loop are required
+```sh
+public class SinglyLinkedList {
+    # other class details omitted for brevity
+    public void removeFromBack() {
+        if (head == null) {
+            # handle edge case where list is empty
+            return null; # can throw exception too
+        } else if (head.next == null) {
+            # head is the only current node
+            # removing from the back = getting rid of head
+            head == null;  #hence we just need to make head null
+        } else {
+            Node current = head;
+            while (current.next.next != null) {
+                current = current.next;
+            }
+            current.next = null;
+        }
+    }
+```
+> Explaining else block above:
+* Given 3 nodes: Node 1 (head & current points to node 1),2,3
+* current.next = node 2, current.next.next = node 3 
+* Basically while `(current.next.next != null)  ==> last node 3 is not null`
+* We then set `current = current.next` => current points to node 2 now
+* We then set `current.next = null`, so meaning that node 2 is now `disengaged from node 3` which was the last node, in a way removing node 3 from the linkedlist
+* Node 2 becomes new last node 
+
+## Optimizing Linked Lists
+> We can introduce a `size` variable to keep track of no.of nodes in linked list 
+* Increment size when `adding` and decrement size when `removing`
+* Can then use `size` variable to handle edge cases as mentioned in codes above
+
+## Optimizing with `Tail` reference
+> We can also introduce a pointer to the last node in the linkedlist also known as the `tail`.
+* Adding to the back becomes `O(1)` time complexity because we do not have to iterate the linkedlist from the front to add to the back `O(n)`.
+    * Set the `current` node's`.next` pointer and the `tail` pointer to the new last node 
+* Does not solve the problem of `removing` from the back as we still need access to the 2nd last node `O(n)` to traverse thru linked list
+* However, it also adds a few edge cases:
+1. Size 0 (List is empty)
+    * When list is empty - both `head & tail` must be set to null
+2. Size 1:
+    * Add To Front
+    * Remove From Front
+    * When list = size 1, both `head and tail` must point to same node
+
+## Adding Generic Types
+* In node class above, only `int data` is able to be stored, to make linkedlists flexible we introduce `generic types` to make it dynamic to store any kind of data user wants
+```sh
+public class SinglyLinkedList<T> {
+    private static class Node<T> {
+        private T data;
+        private Node<T> next;
+
+        private Node(T data, Node<T> next) {
+            this.data = data;
+            this.next = next;
+        }
+        # Overloaded constructor when there is no next node
+        private Node(T data) {
+            this(data, null); # constructor chaining
+        }
+    }
+}
