@@ -196,4 +196,4 @@ public class SinglyLinkedList<T> {
             this(data, null); # constructor chaining
         }
     }
-}
+};
