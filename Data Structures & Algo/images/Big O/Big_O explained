@@ -1,0 +1,27 @@
+![alt](https://github.com/Ben-Tay/Git/blob/main/Data%20Structures%20&%20Algo/images/Big%20O/Big_O.png?raw=true)
+
+Explaining the image above:
+1. `SEARCH` - knowing the data, but not knowing the index, hence it all 3 cases need to traverse the list => `O(n)`
+2. `ACCESS` - accessing element given that we know the index, this is `O(1)` for arraylists, but not for Linked lists because we need to traverse the linked list to access elements in the middle
+3. Add to Front
+    * ArrayLists - `O(n)` because all existing data in arraylist needs to shift to the `right` by one cell
+    * SLL - `O(1)` because only insert a node at the head, and redirect the .next of the new node to the old head
+    * DLL -  `O(1)` because only insert a node at the head, and redirect the .next of the new node to the old head
+
+4. Remove from front
+    * ArrayLists - `O(n)` because all existing data in arraylist needs to shift to the `left` by one cell
+    * SLL - `O(1)` because only move current head to `head.next`, which breaks 1st node access to the LL, and causes it to be picked by garbage collection 
+    * DLL -  `O(1)` because it involves only moving current head to `head.next` and the new head will set its `.previous` to null, to break any connections with the initial first node.
+
+5. Add to back
+* Arrays() - `O(1)` because by keeping track of `size variable` can add to back easily, but if array capacity reaches full, need to resize array, but looking at it from `armortized perspective`, the resize cost averages to `O(1)` from the resize
+* SLL - `O(1)` - have a tail reference to add a node easily by `having tail.next` point to new node
+* DLL -  `O(1)` - have a tail reference to add a node easily by `having tail.next` point to new node and new node `.previous` points to the old tail
+
+6. Remove from back
+* Arrays() - `O(1)` because by keeping track of `size variable` can remove from back easily
+* SLL - `O(n)` whether have tail reference or not because still have to traverse through the linked list to find the 2nd to last node and make its `.next == null`
+* DLL - `O(1)` when you have a tail reference, can look at last node's `.previous` pointer and go to the node before it to make its `.next` == null;
+
+
+
