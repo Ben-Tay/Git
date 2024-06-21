@@ -89,6 +89,7 @@ Popping from the stack `O(1)`
 
 ## Array Backed Stacks
 > Look out for size of array, when stack is empty, `array.size() = 0`
+* Top of stack in array is always at `index size - 1`
 
 Adding to the back
 * Rather than adding to the front, we add to the back as adding to the front would result in shifting of the elements and thus `O(n)` complexity
@@ -99,6 +100,12 @@ Removing from the back
 * By using size variable, we can first decrement the size and then remove the element at the index size
 
 ## Clearing an array back stacked
-1. Just leave data and overwrite as you go (not recommended)
+1. `Just leave data and overwrite as you go (not recommended)`
     * By setting size variable to 0 and overwriting old data, data is sitting around and java cannot garbage collect it
     * Vulnerable for sensitive data
+2. `Manually reset each index in array to null` (not recommended)
+    * As well as reset size variable to 0
+    * Makes clear an `O(n)` operation
+3. Reassign the backing array to a new zero array 
+    * Allows java to garbage collect the array and keeps clear `O(1)`
+    * Recommended
