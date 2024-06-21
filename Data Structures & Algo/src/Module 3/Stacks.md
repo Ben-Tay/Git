@@ -65,7 +65,7 @@ public class CodeDemoBG {
     2. At `recursion(5)`, the if condition is met as i > =5, throwing the stackoverflow error
     3. I think its also pretty safe to assume that without this if block, since there is no progress to a base case here, `this would lead to infinite recursion` also causing stackoverflow error too.
 ## Singly Linked-List Backed Stacks
-Adding to the stack
+Adding to the stack (from the front)
 1. When stack is empty, head of SLL is `null`
 2. Upon pushing to top of stack, we added to the head of the SLL `(O(1))`
 3. Consider adding the following elements :`{1,3,3,2}` to the stack
@@ -75,7 +75,7 @@ Adding to the stack
     * `push(3)` - 3 is added to top of the stack and becomes the new head
     * `push(2)` - 2 is added to top of the stack and becomes the new head
 
-Popping from the stack `O(1)`
+Popping from the stack `O(1)` (from the front)
 1.  `pop()` - 2 is removed and second 3 becomes the new head and top of stack
 2.  `pop()` - second 3 is removed and first 3 becomes the new head and top of stack
 3.  `pop()` - first 3 is removed and 1 becomes the new head and top of stack
