@@ -58,6 +58,12 @@ Important variables in ABQ
 #### Enqueuing 
 * Back index is the one that shifts right, whilst front index stays at 0
 
+If only have front variable:
+* index of most recently enqueued = `front + size % arraylength`
+
+If only have back variable:
+* enqueue at `back + 1`
+
 Upon reaching capacity, there needs to be a `wrap-around` for the back index by doing the following: `back % capacity`
 * Example: Size = 7, Capacity = 7, Back index = 7, 
 * We wrap around the back index by doing 7 % 7 = 0
@@ -66,6 +72,20 @@ Upon reaching capacity, there needs to be a `wrap-around` for the back index by 
 #### Dequeuing 
 * Front index is the one that shifts right/increments, whilst back index stays at 0
 * Size decrements at the same time
+* Edge case: `if front variable is last index of backingArray and there is an element at the index`, what does front variabnle be after call dequeue => make it front index = 0
+
+## Useful Tips
+  How do we access the most recently enqueued element? How do we access the next element to be dequeued? Assume that you have access to the backingArray, a front variable that keeps track of the index of the next element to be dequeued, and a size variable that keeps track of the number of elements in your ArrayQueue.
+  * Enqueue at `front + size` % array.length
+  * Suppose you dequeued, front index moves from ` 0 to 1`  and size decrements
+  * Lets say given dequeued size of 7, we would enqueue at `front (1) + size(7)` % `array.length` where array.length remains same as before dequeueing
+
+  How would we track then if only had back variable?
+  * Next element to be enqueued = `back index + 1`
+  * Next element to be dequeued = `array.length % size`
+  * note that array.length remains same even after dequeue operation
+
+
 
 #### Locality of reference
 NOTE that whilst Big-(O) provides a sense of efficiency, it may not be true due to `spatial locality`
