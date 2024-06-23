@@ -59,3 +59,4 @@ For instance: Online Purchasing System
 * Taking an integer modulo `n` would gives us `n` different classes of numbers based on `what remainder is` when dividing by `n`
 * For negative numbers, instead of `-9 % 5 = 1`, it would give us the smallest negative remainder closest to 0 => `-9 % 5 = 4`
 * Need to have helper methods to `handle negative numbers`.
+
