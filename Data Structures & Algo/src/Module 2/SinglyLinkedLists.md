@@ -197,3 +197,109 @@ public class SinglyLinkedList<T> {
         }
     }
 };
+```
+## Adding at index
+```sh
+/**
+ * Your implementation of a Singly-Linked List.
+ */
+public class SinglyLinkedList<T> {
+
+    /*
+     * Do not add new instance variables or modify existing ones.
+     */
+    private SinglyLinkedListNode<T> head;
+    private SinglyLinkedListNode<T> tail;
+    private int size;
+
+    /*
+     * Do not add a constructor.
+     */
+
+    /**
+     * Adds the element to the specified index.
+     *
+     * Must be O(1) for indices 0 and size and O(n) for all other cases.
+     * 
+     * ASSUMPTIONS:
+     * - You may assume that the index will always be valid [0, size]
+     * - You may assume that the data will not be null
+     *
+     * @param index the index to add the new element
+     * @param data  the data to add
+     */
+    public void addAtIndex(int index, T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!  
+        // Create a new node with the given data
+        SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<>(data);
+
+        if (index == 0) { // Adding at the front
+            newNode.setNext(head);
+            head = newNode;
+            if (size == 0) { // If the list was empty, update the tail
+                tail = newNode;
+            }
+        } else if (index == size) { // Adding at the end
+            if (size == 0) { // If the list was empty, update both head and tail
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.setNext(newNode);
+                tail = newNode;
+            }
+        } else { // Adding at any other index
+            SinglyLinkedListNode<T> current = head;
+            // Traverse to the node just before the specified index
+            for (int i = 0; i < index - 1; i++) {
+                current = current.getNext();
+            }
+            // Insert the new node in between
+            newNode.setNext(current.getNext());
+            current.setNext(newNode);
+        }
+
+        // Increment the size of the list
+        size++;
+    }
+
+
+    /**
+     * Returns the head node of the list.
+     *
+     * For grading purposes only. You shouldn't need to use this method since
+     * you have direct access to the variable.
+     *
+     * @return the node at the head of the list
+     */
+    public SinglyLinkedListNode<T> getHead() {
+        // DO NOT MODIFY THIS METHOD!
+        return head;
+    }
+
+    /**
+     * Returns the tail node of the list.
+     *
+     * For grading purposes only. You shouldn't need to use this method since
+     * you have direct access to the variable.
+     *
+     * @return the node at the tail of the list
+     */
+    public SinglyLinkedListNode<T> getTail() {
+        // DO NOT MODIFY THIS METHOD!
+        return tail;
+    }
+
+    /**
+     * Returns the size of the list.
+     *
+     * For grading purposes only. You shouldn't need to use this method since
+     * you have direct access to the variable.
+     *
+     * @return the size of the list
+     */
+    public int size() {
+        // DO NOT MODIFY THIS METHOD!
+        return size;
+    }
+}
+```
