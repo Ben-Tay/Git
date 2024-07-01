@@ -198,8 +198,10 @@ public class SinglyLinkedList<T> {
     }
 };
 ```
-## Adding at index
+## SLL Implementation
 ```sh
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of a Singly-Linked List.
  */
@@ -215,6 +217,61 @@ public class SinglyLinkedList<T> {
     /*
      * Do not add a constructor.
      */
+
+    /**
+     * Adds the element to the front of the list.
+     *
+     * Method should run in O(1) time.
+     *
+     * @param data the data to add to the front of the list
+     * @throws java.lang.IllegalArgumentException if data is null
+     */
+    public void addToFront(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null.");
+        }
+        
+        SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<>(data);
+
+        if (size == 0) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.setNext(head); // make the next node of the new head the old head
+            head = newNode; // make the head the new Node since adding to the front
+        }
+        size++;
+            
+    }
+
+    /**
+     * Adds the element to the back of the list.
+     *
+     * Method should run in O(1) time.
+     *
+     * @param data the data to add to the back of the list
+     * @throws java.lang.IllegalArgumentException if data is null
+     */
+    public void addToBack(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null.");
+        }
+
+        SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<>(data);
+
+        if (size == 0) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.setNext(newNode); // change old tail.next to new node
+            tail = newNode; // make the new node the new tail
+        }
+        size++;
+    }
 
     /**
      * Adds the element to the specified index.
@@ -262,6 +319,67 @@ public class SinglyLinkedList<T> {
         size++;
     }
 
+    /**
+     * Removes and returns the first data of the list.
+     *
+     * Method should run in O(1) time.
+     *
+     * @return the data formerly located at the front of the list
+     * @throws java.util.NoSuchElementException if the list is empty
+     */
+    public T removeFromFront() {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (size == 0) {
+            throw new NoSuchElementException("Cannot remove from an empty linkedlist");
+           
+        } 
+        
+        T data = head.getData(); // retrieve the data of the head to return back
+        
+        if (size == 1) {
+            head = null;
+            tail = null;
+        } else {
+            head = head.getNext(); // tail does not have to be updated 
+        }
+        
+        size--;
+        return data;
+            
+    }
+
+    /**
+     * Removes and returns the last data of the list.
+     *
+     * Method should run in O(n) time.
+     *
+     * @return the data formerly located at the back of the list
+     * @throws java.util.NoSuchElementException if the list is empty
+     */
+    public T removeFromBack() {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (size == 0) {
+            throw new NoSuchElementException("Cannot remove from an empty linkedlist");
+           
+        } 
+        
+        T data = tail.getData(); // retrieve the data of the last node to return 
+        
+        if (size == 1) {
+            head = null;
+            tail = null;
+        } else {
+            // traverse to 2nd last node in the list
+            SinglyLinkedListNode<T> current = head;
+            while (current.getNext() != tail) {
+                current = current.getNext();
+            }
+            current.setNext(null);
+            tail = current;
+        }
+        size--;
+        return data;
+    }
 
     /**
      * Returns the head node of the list.
@@ -302,4 +420,3 @@ public class SinglyLinkedList<T> {
         return size;
     }
 }
-```
