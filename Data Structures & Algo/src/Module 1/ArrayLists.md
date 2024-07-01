@@ -101,8 +101,10 @@ $$
 * Also makes data structures' implementation details cleaner to work with
 
 
-## Adding at Index
+## Arraylist implementation
 ```sh
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of an ArrayList.
  */
@@ -133,6 +135,64 @@ public class ArrayList<T> {
     }
 
     /**
+     * Adds the data to the front of the list.
+     *
+     * This add may require elements to be shifted.
+     *
+     * Method should run in O(n) time.
+     *
+     * @param data the data to add to the front of the list
+     * @throws java.lang.IllegalArgumentException if data is null
+     */
+    public void addToFront(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null.");
+        }
+        
+        if (size == backingArray.length) {
+            T[] newArray = (T[]) new Object[backingArray.length * 2];
+            for (int i = 0; i < size; i++) {
+                newArray[i + 1] = backingArray[i];
+            }
+            backingArray = newArray;
+        } else {
+            for (int i = size; i > 0; i--) {
+                backingArray[i] = backingArray[i - 1];
+            }
+        }
+        
+        backingArray[0] = data;
+        size++;
+    }
+
+    /**
+     * Adds the data to the back of the list.
+     *
+     * Method should run in amortized O(1) time.
+     *
+     * @param data the data to add to the back of the list
+     * @throws java.lang.IllegalArgumentException if data is null
+     */
+    public void addToBack(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null.");
+        }
+        
+        if (size == backingArray.length) {
+            T[] newArray = (T[]) new Object[backingArray.length * 2];
+            for (int i = 0; i < size; i++) {
+                newArray[i] = backingArray[i];
+            }
+            backingArray = newArray;
+        }
+
+        backingArray[size] = data;
+        size++;
+    }
+
+     /**
      * Adds the data to the specified index.
      *
      * Must be O(1) for index size and O(n) for all other cases.
@@ -162,6 +222,56 @@ public class ArrayList<T> {
     }
 
     /**
+     * Removes and returns the first data of the list.
+     *
+     * Do not shrink the backing array.
+     *
+     * This remove may require elements to be shifted.
+     *
+     * Method should run in O(n) time.
+     *
+     * @return the data formerly located at the front of the list
+     * @throws java.util.NoSuchElementException if the list is empty
+     */
+    public T removeFromFront() {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (size == 0) {
+            throw new NoSuchElementException("The list is empty.");
+        }
+        
+        T removedData = backingArray[0];
+        for (int i = 0; i < size - 1; i++) {
+            backingArray[i] = backingArray[i + 1];
+        }
+        
+        backingArray[size - 1] = null; // Clear the last element
+        size--;
+        return removedData;
+    }
+
+    /**
+     * Removes and returns the last data of the list.
+     *
+     * Do not shrink the backing array.
+     *
+     * Method should run in O(1) time.
+     *
+     * @return the data formerly located at the back of the list
+     * @throws java.util.NoSuchElementException if the list is empty
+     */
+    public T removeFromBack() {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (size == 0) {
+            throw new NoSuchElementException("The list is empty.");
+        }
+        
+        T removedData = backingArray[size - 1];
+        backingArray[size - 1] = null; //clear the last element
+        size--;
+        return removedData;
+    }
+
+    /**
      * Returns the backing array of the list.
      *
      * For grading purposes only. You shouldn't need to use this method since
@@ -187,4 +297,3 @@ public class ArrayList<T> {
         return size;
     }
 }
-```
