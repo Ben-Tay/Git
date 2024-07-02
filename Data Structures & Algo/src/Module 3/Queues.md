@@ -74,7 +74,10 @@ Upon reaching capacity, there needs to be a `wrap-around` for the back index by 
 * Size decrements at the same time
 * Edge case: `if front variable is last index of backingArray and there is an element at the index`, what does front variabnle be after call dequeue => make it front index = 0
 
+## ArrayQueue Implementation
 ```sh
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of an ArrayQueue.
  */
@@ -106,6 +109,42 @@ public class ArrayQueue<T> {
     }
 
     /**
+     * Adds the data to the back of the queue.
+     *
+     * If sufficient space is not available in the backing array, resize it to
+     * double the current length. When resizing, copy elements to the
+     * beginning of the new array and reset front to 0.
+     *
+     * Method should run in amortized O(1) time.
+     *
+     * @param data the data to add to the back of the queue
+     * @throws java.lang.IllegalArgumentException if data is null
+     */
+    public void enqueue(T data) {
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null");
+        } 
+        
+        // Check if the array needs to be resized
+        if (size == backingArray.length) {
+            T[] newArray = (T[]) new Object[backingArray.length * 2];
+            for (int i = 0; i < size; i++) {
+                newArray[i] = backingArray[(front + i) % backingArray.length];
+            }
+            // Updates the backing array with the new array
+            backingArray = newArray;
+            // Reset front index to 0 because new elements start from beginning of the array
+            front = 0;
+        }
+        
+        // Add the new element to the back of the queue
+        int backIndex = (front + size) % backingArray.length;
+        backingArray[backIndex] = data;
+        size++;
+    }
+
+    /**
      * Removes and returns the data from the front of the queue.
      *
      * Do not shrink the backing array.
@@ -117,25 +156,20 @@ public class ArrayQueue<T> {
      *
      * Method should run in O(1) time.
      *
-     * ASSUMPTIONS:
-     * - You may assume that the backingArray is not empty.
-     *
      * @return the data formerly located at the front of the queue
+     * @throws java.util.NoSuchElementException if the queue is empty
      */
     public T dequeue() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        T data = backingArray[front] // retrieve the front element for returning
-        // set front index to null
-        backingArray[front] = null;
-           
-        // Move the front pointer to the next position
-        front = (front + 1) % backingArray.length;
-
-        // Decrement the size of the queue
+        if (size == 0) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        // Deque removes the element at the front
+        T removedData = backingArray[front];
+        backingArray[front] = null; // set removedData to be null
+        front = (front + 1) % backingArray.length; // update front index 
         size--;
-
-        // Return the data that was at the front of the queue
-        return data;
+        return removedData;
     }
 
     /**
